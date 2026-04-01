@@ -12,6 +12,11 @@ export default defineConfig({
     },
   },
 
+  build: {
+    outDir: "dist",
+    sourcemap: false,
+  },
+
   server: {
     proxy: {
       "/api": {
