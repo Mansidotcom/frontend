@@ -34,7 +34,7 @@ const AdminOrders = () => {
     const fetchOrders = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/api/v1/orders/all",
+          `${import.meta.env.VITE_API_BASE_URL}/orders/all`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

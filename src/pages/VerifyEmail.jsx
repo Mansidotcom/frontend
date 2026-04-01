@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const VerifyEmail = () => {
-  const { token } = useParams();              // 
-  const [status, setStatus] = useState("Verifying..."); // 
+  const { token } = useParams();
+  const [status, setStatus] = useState("Verifying...");
   const navigate = useNavigate();
 
   const verifyEmail = async () => {

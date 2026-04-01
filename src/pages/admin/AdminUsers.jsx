@@ -18,7 +18,7 @@ const AdminUsers = () => {
     try {
 
       const res = await axios.get(
-        "http://localhost:8000/api/v1/user/all-users",
+        `${import.meta.env.VITE_API_BASE_URL}/user/all-users`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

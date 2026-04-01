@@ -49,7 +49,7 @@ const Products = () => {
     finally {
       setLoading(false);
     }
-  }
+}
 
   useEffect(() => {
     if (allProducts.length === 0) return;
