@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createBrowserRouter, Router, RouterProvider } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -22,6 +22,9 @@ import SingleProduct from './pages/SingleProduct'
 import AdminOrders from './pages/admin/AdminOrders'
 import AddressForm from './pages/AddressForm'
 import OrderSuccess from './pages/OrderSuccess'
+import { useDispatch } from 'react-redux'
+import { setUser } from './redux/userSlice'
+import axios from 'axios'
 
 
 
@@ -116,6 +119,30 @@ const router = createBrowserRouter([
 ])
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        try {
+          const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (res.data.success) {
+            dispatch(setUser(res.data.user));
+          }
+        } catch (error) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+        }
+      }
+    };
+    checkAuth();
+  }, [dispatch]);
+
   return (
     <>
       <RouterProvider router={router} />
