@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import React from 'react'
+import heroImg from '@/assets/cal.jpg'
 
 const Hero = () => {
     return (
@@ -20,7 +21,7 @@ const Hero = () => {
                         </div>
                     </div>
                     <div className='relative flex justify-center md:justify-end'>
-                        <img src='/src/assets/cal.jpg' alt='Electronics showcase' className='rounded-lg shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto' />
+                        <img src={heroImg} alt='Electronics showcase' className='rounded-lg shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto' />
                     </div>
                 </div>
             </div>
