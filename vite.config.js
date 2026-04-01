@@ -15,7 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: "https://backend-4-30ze.onrender.com",
         changeOrigin: true,
         secure: false,
       },
