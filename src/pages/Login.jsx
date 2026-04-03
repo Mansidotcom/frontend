@@ -138,7 +138,7 @@ const Login = () => {
         <CardFooter className="flex-col gap-2">
           <p className="text-sm">
             Dont't have an account?{"signup "}
-            <Link to="/login" className="text-pink-700 hover:underline">
+            <Link to="/signup" className="text-pink-700 hover:underline">
               Signup
             </Link>
           </p>
