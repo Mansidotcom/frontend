@@ -41,7 +41,11 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
 
+    console.log("Form data:", formData);
+    console.log("API URL:", import.meta.env.VITE_API_BASE_URL);
+
     try {
+      console.log("Making API request...");
       const res = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/user/register`,
         formData,
@@ -52,12 +56,15 @@ const Signup = () => {
         }
       );
 
+      console.log("API response:", res.data);
+
       if (res.data.success) {
         toast.success(res.data.message);
         navigate("/verify");
       }
     } catch (error) {
       console.log("ERROR 👉", error.response?.data || error.message);
+      console.log("Full error:", error);
       toast.error(
         error.response?.data?.message || "Backend server not running"
       );
