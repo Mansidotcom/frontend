@@ -51,7 +51,7 @@ const AddressForm = () => {
         `${import.meta.env.VITE_API_BASE_URL}/orders/create-order`,
         {
           products: cart?.items?.map(item => ({
-            productId: item.productId,
+            productId: item.productId._id || item.productId,
             quantity: item.quantity
           })),
           tax,
