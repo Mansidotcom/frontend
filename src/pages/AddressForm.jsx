@@ -48,7 +48,7 @@ const AddressForm = () => {
 
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_URL}/api/v1/orders/create-order`,
+        `${import.meta.env.VITE_API_BASE_URL}/orders/create-order`,
         {
           products: cart?.items?.map(item => ({
             productId: item.productId,
@@ -64,78 +64,25 @@ const AddressForm = () => {
         }
       )
 
-      if (!data.success) {
+      if (data.success) {
+        toast.success("Order placed successfully")
+        dispatch(setCart({ items: [], totalPrice: 0 }))
+        navigate("/order-success")
+      } else {
         toast.error("Something went wrong")
-        return
       }
-
-      const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: data.order.amount,
-        currency: data.order.currency,
-        order_id: data.order.id,
-        name: "ekart",
-        description: "Order Payment",
-
-        handler: async function (response) {
-          try {
-            const verifyRes = await axios.post(
-              `${import.meta.env.VITE_URL}/api/v1/orders/verify-payment`,
-              response,
-              {
-                headers: { Authorization: `Bearer ${accessToken}` }
-              }
-            )
-
-            if (verifyRes.data.success) {
-              toast.success("Payment successful")
-              dispatch(setCart({ items: [], totalPrice: 0 }))
-              navigate("/order-success")
-            } else {
-              toast.error("Payment verification failed")
-            }
-          } catch (err) {
-            toast.error("Error verifying payment")
-          } 
-        },
-
-        modal: {
-          ondismiss: async function () {
-            await axios.post(
-              `${import.meta.env.VITE_URL}/api/v1/orders/verify-payment`,
-              {
-                razorpay_order_id: data.order.id,
-                paymentFailed: true
-              },
-              {
-                headers: { Authorization: `Bearer ${accessToken}` }
-              }
-            )
-            toast.error("Payment cancelled")
-          }
-        },
-
-        prefill: {
-          name: formData.fullname,
-          email: formData.email,
+    } catch (error) {
+      toast.error("Error placing order")
+    }
+  }
           contact: formData.phone
         },
 
-        theme: {
-          color: "#472B6"
-        }
-      }
-
-      const rzp = new window.Razorpay(options)
-      rzp.open()
-
     } catch (error) {
       console.log(error)
-      toast.error("Something went wrong while processing payment")
+      toast.error("Something went wrong while placing order")
     }
   }
-
-  return (
     <div className="max-w-7xl mx-auto grid place-items-center p-10">
       <div className="grid grid-cols-2 gap-20 mt-10 max-w-7xl mx-auto">
         <div className="space-y-4 p-6 bg-white rounded-lg shadow">

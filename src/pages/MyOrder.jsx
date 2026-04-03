@@ -56,7 +56,7 @@ const MyOrder = () => {
     
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_URL}/api/v1/orders/my-orders`,
+      `${import.meta.env.VITE_API_BASE_URL}/orders/my-orders`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
