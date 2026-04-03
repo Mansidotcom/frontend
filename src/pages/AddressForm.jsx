@@ -75,14 +75,8 @@ const AddressForm = () => {
       toast.error("Error placing order")
     }
   }
-          contact: formData.phone
-        },
 
-    } catch (error) {
-      console.log(error)
-      toast.error("Something went wrong while placing order")
-    }
-  }
+  return (
     <div className="max-w-7xl mx-auto grid place-items-center p-10">
       <div className="grid grid-cols-2 gap-20 mt-10 max-w-7xl mx-auto">
         <div className="space-y-4 p-6 bg-white rounded-lg shadow">
