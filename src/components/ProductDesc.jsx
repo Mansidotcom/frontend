@@ -12,6 +12,13 @@ const ProductDesc = ({product}) => {
   const accessToken = localStorage.getItem("accessToken")
   const dispatch = useDispatch()
   const addToCart = async(productId)=>{
+    const accessToken = localStorage.getItem("accessToken")
+
+    if (!accessToken) {
+      toast.error("Please login to add items to cart")
+      return
+    }
+
     try{
      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/cart/add`, {productId}, {
       headers:{
@@ -24,7 +31,13 @@ const ProductDesc = ({product}) => {
      }
     }
     catch(error){
-
+      console.log("Add to cart error:", error.response?.data || error.message);
+      if (error.response?.status === 401) {
+        toast.error("Session expired. Please login again.")
+        localStorage.removeItem("accessToken")
+      } else {
+        toast.error("Failed to add product to cart")
+      }
     }
   }
 
